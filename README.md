@@ -42,7 +42,7 @@ A short practical introduction Foundry
     ├── Contract.sol
     └── test
         └── Contract.t.sol
-
+```
 
 ```
 foundry init --template https://github.com/abigger87/femplate
