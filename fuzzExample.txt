@@ -1,0 +1,86 @@
+ odys@odys-mbp-16  ~/code/odyslam/foundry101   feat/content  forge test -vvvvv -f $ETH_RPC_URL --block-number 14608937
+[⠢] Compiling...
+No files changed, compilation skipped
+
+Running 4 tests for src/test/NomadBase.t.sol:NomadBaseTest
+[FAIL. Counterexample: calldata=0xee771258000000000000000000000000ef989866b66a491e7b6c7473d73b589450d0f766, args=[0xef989866b66a491e7b6c7473d73b589450d0f766]] test_fuzz_replicaToDomain(address) (runs: 4, μ: 5776, ~: 5776)
+Logs:
+  Error: a == b not satisfied [uint]
+    Expected: 25393
+      Actual: 0
+
+Traces:
+  [225199] NomadBaseTest::setUp()
+    ├─ [148406] → new NomadBase@0xce71065d4017f316ec606fe4422e11eb2c47c246
+    │   ├─ emit FuzzTrap(: 0xef989866b66a491e7b6c7473d73b589450d0f766)
+    │   └─ ← 624 bytes of code
+   └─ ← ()
+
+  [20446] NomadBaseTest::test_fuzz_replicaToDomain(0xef989866b66a491e7b6c7473d73b589450d0f766)
+    ├─ [341] NomadBase::replicaToDomain(0xef989866b66a491e7b6c7473d73b589450d0f766)
+    │   └─ ← 25393
+    ├─ emit log(: "Error: a == b not satisfied [uint]")
+    ├─ emit log_named_uint(key: "  Expected", val: 25393)
+    ├─ emit log_named_uint(key: "    Actual", val: 0)
+    ├─ [0] VM::store(VM: [0x7109709ecfa91a80626ff3989d68f67f5b1dd12d], 0x6661696c65640000000000000000000000000000000000000000000000000000, 0x0000000000000000000000000000000000000000000000000000000000000001)
+    │   └─ ← ()
+    └─ ← ()
+
+[PASS] test_getLocalDomain() (gas: 18677)
+Traces:
+  [225199] NomadBaseTest::setUp()
+    ├─ [148406] → new NomadBase@0xce71065d4017f316ec606fe4422e11eb2c47c246
+    │   ├─ emit FuzzTrap(: 0xef989866b66a491e7b6c7473d73b589450d0f766)
+    │   └─ ← 624 bytes of code
+    └─ ← ()
+
+  [18677] NomadBaseTest::test_getLocalDomain()
+    ├─ [13388] XAppConnectionManager::localDomain() [staticcall]
+    │   ├─ [8119] UpgradeBeaconProxy::localDomain() [staticcall]
+    │   │   ├─ [2160] UpgradeBeacon::fallback() [staticcall]
+    │   │   │   └─ ← 0x0000000000000000000000008f184d6aa1977fd2f9d9024317d0ea5cf5815b6f
+    │   │   ├─ [297] Home::localDomain() [delegatecall]
+    │   │   │   └─ ← 6648936
+    │   │   └─ ← 6648936
+    │   └─ ← 6648936
+    └─ ← ()
+
+[PASS] test_getMessage() (gas: 9238)
+Traces:
+  [225199] NomadBaseTest::setUp()
+    ├─ [148406] → new NomadBase@0xce71065d4017f316ec606fe4422e11eb2c47c246
+    │   ├─ emit FuzzTrap(: 0xef989866b66a491e7b6c7473d73b589450d0f766)
+    │   └─ ← 624 bytes of code
+    └─ ← ()
+
+  [9238] NomadBaseTest::test_getMessage()
+    ├─ [2981] NomadBase::getMessage(0x536f6c6964697479000000000000000000000000000000000000000000000000, 0x2053756d6d697400000000000000000000000000000000000000000000000000)
+    │   └─ ← 0x000003e8536f6c69646974790000000000000000000000000000000000000000000000002053756d6d697400000000000000000000000000000000000000000000000000
+    └─ ← ()
+
+[PASS] test_replicaToDomain() (gas: 14735)
+Traces:
+  [225199] NomadBaseTest::setUp()
+    ├─ [148406] → new NomadBase@0xce71065d4017f316ec606fe4422e11eb2c47c246
+    │   ├─ emit FuzzTrap(: 0xef989866b66a491e7b6c7473d73b589450d0f766)
+    │   └─ ← 624 bytes of code
+    └─ ← ()
+
+  [14735] NomadBaseTest::test_replicaToDomain()
+    ├─ [226] NomadBase::milkomedaReplica() [staticcall]
+    │   └─ ← 0xef989866b66a491e7b6c7473d73b589450d0f766
+    ├─ [341] NomadBase::replicaToDomain(0xef989866b66a491e7b6c7473d73b589450d0f766)
+    │   └─ ← 25393
+    ├─ [226] NomadBase::milkomedaReplica() [staticcall]
+    │   └─ ← 0xef989866b66a491e7b6c7473d73b589450d0f766
+    ├─ [2495] XAppConnectionManager::replicaToDomain(0xef989866b66a491e7b6c7473d73b589450d0f766)
+    │   └─ ← 25393
+    └─ ← ()
+
+Test result: FAILED. 3 passed; 1 failed; finished in 4.28s
+
+Failed tests:
+[FAIL. Counterexample: calldata=0xee771258000000000000000000000000ef989866b66a491e7b6c7473d73b589450d0f766, args=[0xef989866b66a491e7b6c7473d73b589450d0f766]] test_fuzz_replicaToDomain(address) (runs: 4, μ: 5776, ~: 5776)
+
+Encountered a total of 1 failing tests, 3 tests succeeded
+
