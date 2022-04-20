@@ -12,6 +12,7 @@ contract NomadBaseTest is Test {
 
     function setUp() public {
         nomadBase = new NomadBase(0xEf989866b66a491e7B6c7473D73b589450D0f766);
+        // use cast interface to easily print the interface of any deployed smart contract
         xAppConMngr = XAppConnectionManager(
             0xFe8874778f946Ac2990A29eba3CFd50760593B2F
         );

@@ -54,7 +54,8 @@ foundry init --template https://github.com/abigger87/femplate
 - We break up tests logically in different contracts
 - Every contract has a single `setUp` function that is called before every `testFunction`.
 - It's best to logically divide our fixtures into different contracts that form an inheritence chain:
-    - Example: https://github.com/gakonst/v3-periphery-foundry/blob/main/contracts/foundry-tests/utils/Deploy.sol
+    - Pattern: https://github.com/gakonst/v3-periphery-foundry/blob/main/contracts/foundry-tests/utils/Deploy.sol
+    - Anti-Pattern: https://github.com/pentagonxyz/gov-of-venice/blob/master/src/test/utils/gov2Test.sol
     - It's best because we can easily inspect the fixtures. We could do the same in a single `setUp` function.
     - We can either use the same `setUp()` function by having it virtual and every fixture calling the `setUp()`, or we can use different functions.
 - gas-report is an estimate by forge on how much gas it thinks that each function of your smart contract will consume.
@@ -184,6 +185,7 @@ interface CheatCodes {
 - To install testing libraries that don't live in a `npm` package, you can still use `forge  install` and `/lib` for ease of use.
 - There are two partners for creating actors that interact with the smart contracts:
     - Before we had `vm.prank`, we would create a smart contract that called the smart contract under test. The `user` smart contract would be a simple wrapper. This is now mostly an anti-pattern.
+        - Example: https://github.com/pentagonxyz/gov-of-venice/blob/master/src/test/utils/gov2Test.sol
     - Use `vm.prank()` and call all the functions we want to call, using some addressed that we have generated with `vm.addr()`. It reduces the boilerplate considerably.
     - In essence, instead of creating complex actors, we just create addresses. No more boilerplate code.
 - Example structure
@@ -202,12 +204,14 @@ interface CheatCodes {
 - It's as simple as adding an input to the test function
 - The fuzzer will pick random inputs that are of the same input type
 - You can limit the inputs with `vm.assume()`
-- The fuzzer dictionary will also be enriched with any state changes that happens in your smart contract. It will also be enriched with non-random extreme values (e.g UINT256.max). It's extremely good.
+- The fuzzer dictionary will also be enriched with any state changes that happens in your smart contract. It will also be enriched with non-random extreme values (e.g UINT256.max)
+- It's good
 -
 ## Deploy
 
 - To deploy our smart contracts, we use forge create and then forge verify-contract to verify the contracts on etherscan
 - This command will be deprecated in the coming months, as we will support the ability to deploy through solidity scripts. That means that we can replace existing deployment pipelines with Solidity.
+
 ```
 ETH_RPC_URL=https://eth-rinkeby.alchemyapi.io/v2/pmyDZ_qaFpuamRt-daJztGtgZUv6eowD && forge create --rpc-url $ETH_RPC_URL "0xD9f3c9CC99548bF3b44a43E0A2D07399EB918ADc" --etherscan-api-key $ETHERSCAN_API_KEY src/NomadBase.sol:NomadBase --private-key $PRIVATE_KEY
 
