@@ -16,6 +16,7 @@ contract NomadBase {
 
     function getMessage(bytes32 oldRoot, bytes32 newRoot)
         public
+        view
         returns (bytes memory)
     {
         bytes memory message = new bytes(68);
@@ -29,7 +30,7 @@ contract NomadBase {
         return message;
     }
 
-    function replicaToDomain(address replica) external returns (uint32) {
+    function replicaToDomain(address replica) external view returns (uint32) {
         if (replica == milkomedaReplica) {
             return 25393;
         } else {

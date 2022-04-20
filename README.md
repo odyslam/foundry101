@@ -2,11 +2,22 @@
 
 A short practical introduction Foundry
 
+## Me
+
+![](https://user-images.githubusercontent.com/13405632/164205664-f5593ed9-8539-4d0e-aec1-647595c97a07.png)
+
 ## Agenda
 
 - Forge, 10 minutes
 - Cast, 2 minutes
 - Q&A, 3 minutes
+
+## Goals
+
+- Not just a simple showcase of all functionality. Read the docs!
+- TL;DR some best practices and mental models that will get you productive immediately
+- Cover as much as possible , but leave time for discussion
+
 
 ## Forge
 
@@ -60,9 +71,18 @@ foundry init --template https://github.com/abigger87/femplate
     - We can either use the same `setUp()` function by having it virtual and every fixture calling the `setUp()`, or we can use different functions.
 - gas-report is an estimate by forge on how much gas it thinks that each function of your smart contract will consume.
 - gas-snapshot is a good tool to easily start gas optimizing your contracts. The more fine-grained tests you have, the more accurate the gas report will be. Ideally, each unit-test should test a single thing either-way, so that's another forcing function for keeping good testing hygiene. It's best to add gas-snapshot to the CI and inspect the diff in git-versioning. You can easily see if some change to the underline code resulted in change to the gas cost of test function, as it will show in the diff of the new commit/PR.port.
+- Mocks: Create smart contracts that mock the behaviour of external smart contracts or actors. For example, a mockERC20 that is like ERC-20, but where you can mint `freely`
+- Suggested libraries:
+    - forge-std: https://github.com/foundry-rs/forge-std
+        - DSTest
+        - console.log
+        - stdCheats
+        - helper functions to write to files 🔜
+    - solmate: https://github.com/Rari-Capital/solmate
+        - Opinionated and gas-optized smart contracts. Alternative to Open-Zeppelin (although it doesn't cover all implementations)
 
 ### Forge Mainnet Forking
-- You can Fork at current block or specified. If specified, it's cached.
+- You can `fork` at current block or specified. If specified, it's cached.
 - Now, call traces will show the functions that are executed in remote contracts as well. Before it would just show contract and signature, but we download source code from etherscan and you can see what contract executed what function.
 - Example with test_localDomain().
 - You can use `cast interface` to easily get the interface signature of some contract on etherscan
@@ -103,6 +123,7 @@ interface CheatCodes {
 
     // Performs a foreign function call via terminal.
     // example: https://github.com/libevm/subway/blob/master/contracts/src/test/Sandwich.t.sol
+    // Nomad: cross-chain communication. Run subsequent tests with different --rpc-url and use file-based read/writes to emulate off-chain agents, all without leaving solidity (except for the bash script that executes subsequent forge test with different --rpc-url)
     function ffi(string[] calldata) external returns (bytes memory);
 
     // Sets the *next* call's msg.sender to be the input address
@@ -175,7 +196,7 @@ interface CheatCodes {
 - Top left we have the PC, which shows us what OPCODE will be executed by the EVM
 - OPCODES: https://www.evm.codes/
 - Everything highlighted: is not tied to a function, it's setup for the contract
-- example: test with left shift
+- Example: `forge test --debug test_getMessage`
 -
 ### Hardhat --> Foundry
 
@@ -224,3 +245,30 @@ forge verify-contract --compiler-version $CMPLR $CONTRACT src/NomadBase.sol:Noma
 - cast call & cast send are the main commands to easily send arbitrary transactions or read the state of the chain
 - cast was very useful to script deployment and configuration pipelines. With the upcoming release of `foundry deploy`, when we will write our deployment scripts in solidity, that use-case shouldn't be needed
 - That being said, configuration scripting could still be useful, example: https://github.com/pentagonxyz/gov-of-venice/blob/master/scripts/deploy-guild.sh
+
+## Next
+
+- Forge node (Anvil)
+- Forge deploy
+- Forge fmt
+- Forge docs
+
+## CTA
+
+- Install Foundry: https://getfoundry.sh/
+- Read the book: https://book.getfoundry.sh/
+- Join our Telegram groups: https://github.com/foundry-rs/foundry
+- Use Foundry in your project and let us know: https://github.com/crisgarner/awesome-foundry
+- Open GH issues with any bugs you find (please share a reproduction repo of the bug)
+- Open issues with UX improvements and new features (+ usecase)
+- Contribute!
+    - Rust beginners: cast is easy to understand and simple features can bring huge UX improvements. Search for `good first issues` tag on GH
+    - Dive into Forge! Look for bugs and comment that you want to work on fixing it.
+    - Ask in the telegram group for what's in the pipeline and let us know you wan to work on something
+
+## kudos
+- Georgios Konstantopoulos
+- Matt Seitz
+- Oliver Nordbjerg
+- Brock Elmore
+- Lucas Manuel
