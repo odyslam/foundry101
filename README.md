@@ -53,17 +53,17 @@ foundry init --template https://github.com/abigger87/femplate
 - Every test is a `public` or `external` function that starts with `test`
 - We break up tests logically in different contracts
 - Every contract has a single `setUp` function that is called before every `testFunction`.
-- It's best to logically divide our fixtures into different contracts that form an inheritence chain:
+- It's best to logically divide our fixtures into different contracts that form an inheritance chain:
     - Pattern: https://github.com/gakonst/v3-periphery-foundry/blob/main/contracts/foundry-tests/utils/Deploy.sol
     - Anti-Pattern: https://github.com/pentagonxyz/gov-of-venice/blob/master/src/test/utils/gov2Test.sol
     - It's best because we can easily inspect the fixtures. We could do the same in a single `setUp` function.
     - We can either use the same `setUp()` function by having it virtual and every fixture calling the `setUp()`, or we can use different functions.
 - gas-report is an estimate by forge on how much gas it thinks that each function of your smart contract will consume.
-- gas-snapshot is a good tool to easily start gas optimizing your contracts. The more fine-grained tests you have, the more accurate the gas report will be. Ideally, each unit-test should test a single thing either-way, so that's another forcing function for keeping good testing hygiene. It's best to add gas-snapshot to the CI and inspect the diff in git-versioning. You can easily see if some change to the underline code resulted in change to the gas cost of test function, as it will show in the diff of the new commint/PR.port.
+- gas-snapshot is a good tool to easily start gas optimizing your contracts. The more fine-grained tests you have, the more accurate the gas report will be. Ideally, each unit-test should test a single thing either-way, so that's another forcing function for keeping good testing hygiene. It's best to add gas-snapshot to the CI and inspect the diff in git-versioning. You can easily see if some change to the underline code resulted in change to the gas cost of test function, as it will show in the diff of the new commit/PR.port.
 
 ### Forge Mainnet Forking
 - You can Fork at current block or specified. If specified, it's cached.
-- Now, call traces will show the functions that are executed in remote contracts as well. Before it would just show cntract and signature, but we download source code from etherscan and you can see what contract executed what function.
+- Now, call traces will show the functions that are executed in remote contracts as well. Before it would just show contract and signature, but we download source code from etherscan and you can see what contract executed what function.
 - Example with test_localDomain().
 - You can use `cast interface` to easily get the interface signature of some contract on etherscan
 
