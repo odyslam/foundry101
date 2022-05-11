@@ -1,6 +1,8 @@
 # Foundry 101
 
-A short practical introduction Foundry
+A short practical introduction to Foundry
+
+This short workshop was conducted during the Solidity Summit 2022. Here is the [Presentation Recording](https://www.youtube.com/watch?v=3QlH1YvUPT4&list=PLX8x7Zj6Vezl1lqBgxiQH3TFbRNZza8Fk&index=7).
 
 ## Me
 
@@ -197,7 +199,7 @@ interface CheatCodes {
 - OPCODES: https://www.evm.codes/
 - Everything highlighted: is not tied to a function, it's setup for the contract
 - Example: `forge test --debug test_getMessage`
--
+
 ### Hardhat --> Foundry
 
 - You can still use Hardhat for complex deployments and test using Foundry
